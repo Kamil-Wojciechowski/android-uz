@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FoodCount</string>
+    <string name="CustomerName">Customer Name</string>
+    <string name="Age">Age</string>
+    <string name="CustomerActive">Customer Active</string>
+    <string name="ViewAll">View All</string>
+    <string name="Add">Add</string>
+</resources>
