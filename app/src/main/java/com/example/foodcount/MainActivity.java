@@ -3,10 +3,15 @@ package com.example.foodcount;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +32,40 @@ public class MainActivity extends AppCompatActivity {
         sw_activeCustomer = findViewById(R.id.sw_customerActive);
         lv_customerList = findViewById(R.id.lv_listView);
 
+        //btn listeners
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    CustomerModel customer = new CustomerModel(-1, et_name.getText().toString(), Integer.parseInt(et_age.getText().toString()), sw_activeCustomer.isChecked());
 
+                    DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+                    boolean bool = databaseHelper.addOne(customer);
+
+                    if(bool) {
+                        Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed!", Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Error!", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
+        btn_viewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+                List<CustomerModel> everyone = db.getEveryone();
+
+                ArrayAdapter customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1, everyone);
+                lv_customerList.setAdapter(customerArrayAdapter);
+
+            }
+        });
     }
 }
