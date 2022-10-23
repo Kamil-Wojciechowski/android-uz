@@ -5,4 +5,12 @@
     <string name="CustomerActive">Customer Active</string>
     <string name="ViewAll">View All</string>
     <string name="Add">Add</string>
+    <string name="welcomeString">Welcome in reciepe journal!</string>
+    <string name="welcomAskQuestion">We wanted to ask you to provide basic information for us!</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="birthDate">Birth Date</string>
+    <string name="Email">Email</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="Save">Save</string>
 </resources>
