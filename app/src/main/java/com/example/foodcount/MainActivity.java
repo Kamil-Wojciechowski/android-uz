@@ -3,6 +3,7 @@ package com.example.foodcount;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    CustomerModel customer = new CustomerModel(-1, et_name.getText().toString(), Integer.parseInt(et_age.getText().toString()), sw_activeCustomer.isChecked());
-
-                    DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
-                    boolean bool = databaseHelper.addOne(customer);
+                    CustomerModel customer = new CustomerModel(MainActivity.this, -1, et_name.getText().toString(), Integer.parseInt(et_age.getText().toString()), sw_activeCustomer.isChecked());
+                    Log.println(Log.INFO, "System", et_name.getText().toString());
+                    Boolean bool = customer.save();
+//                    DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+//                    boolean bool = databaseHelper.addOne(customer);
 
                     if(bool) {
                         Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_LONG).show();
@@ -59,12 +61,10 @@ public class MainActivity extends AppCompatActivity {
         btn_viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-                List<CustomerModel> everyone = db.getEveryone();
+                List<CustomerModel> everyone = new CustomerModel(MainActivity.this).getCustomers();
 
                 ArrayAdapter customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1, everyone);
                 lv_customerList.setAdapter(customerArrayAdapter);
-
             }
         });
     }
