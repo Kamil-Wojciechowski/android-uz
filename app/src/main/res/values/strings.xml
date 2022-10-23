@@ -9,7 +9,7 @@
     <string name="welcomAskQuestion">We wanted to ask you to provide basic information for us!</string>
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
-    <string name="birthDate">Birth Date</string>
+    <string name="birthDate">Birth Date: 01.01.2000</string>
     <string name="Email">Email</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="Save">Save</string>
