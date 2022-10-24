@@ -2,9 +2,11 @@ package com.example.foodcount;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,15 +22,17 @@ public class MainActivity extends AppCompatActivity {
     EditText tv_firstname, tv_lastname, tx_email, tx_date,tx_phone;
     Button bt_save;
 
-//    private SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+    SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "myprefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
-//        if(checkData()) {
-//            moveToNext();
-//        }
+        if(checkData()) {
+            moveToNext();
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -44,15 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private Boolean checkData() {
-//        String firstname = prefs.getString("firstname","");
-//        String lastname = prefs.getString("lastname","");
-//        //Date age = prefs.getInt("age",0);
-//        String email = prefs.getString("email","");
-//        String phoneNumber = prefs.getString("phoneNumber","");
-//
-//        return (firstname.isEmpty() && lastname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty());
-//    }
+    private Boolean checkData() {
+        String firstname = sharedpreferences.getString("firstname","");
+        String lastname = sharedpreferences.getString("lastname","");
+        //Date age = prefs.getInt("age",0);
+        String email = sharedpreferences.getString("email","");
+        String phoneNumber = sharedpreferences.getString("phoneNumber","");
+
+        Log.println(Log.INFO, "System", firstname);
+        Log.println(Log.INFO, "System", lastname);
+        Log.println(Log.INFO, "System", email);
+        Log.println(Log.INFO, "System", phoneNumber);
+
+        return (!firstname.isEmpty() && !lastname.isEmpty() && !email.isEmpty() && !phoneNumber.isEmpty());
+    }
 
     private void moveToNext() {
         startActivity(new Intent(MainActivity.this, SecondActivity.class));
@@ -68,17 +77,17 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.println(Log.INFO, "System", tx_date.getText().toString());
 
-//                SharedPreferences.Editor editor = prefs.edit();
-//                editor.putString("firstname", tv_firstname.getText().toString());
-//                editor.putString("lastname", tv_lastname.getText().toString());
-                //editor.putString("age", tx_date.getText().toString());
-//                editor.putString("email", tx_email.getText().toString());
-//                editor.putString("phoneNumber", tx_phone.getText().toString());
-//                editor.commit();
-
-//                moveToNext();
-
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("firstname", tv_firstname.getText().toString());
+                editor.putString("lastname", tv_lastname.getText().toString());
+                editor.putString("age", tx_date.getText().toString());
+                editor.putString("email", tx_email.getText().toString());
+                editor.putString("phoneNumber", tx_phone.getText().toString());
+                editor.apply();
                 Toast.makeText(MainActivity.this, "Sucess!", Toast.LENGTH_LONG).show();
+                moveToNext();
+
+
             }
         });
     }
@@ -172,5 +181,10 @@ public class MainActivity extends AppCompatActivity {
 
             tx_phone.setError(null);
             return true;
+        }
+
+        @Override
+        public void onBackPressed() {
+            moveTaskToBack(true);
         }
     }
