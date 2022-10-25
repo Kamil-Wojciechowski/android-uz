@@ -6,24 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity {
+
+public class LoginActivity extends AppCompatActivity {
 
     EditText tv_firstname, tv_lastname, tx_email, tx_date,tx_phone;
     Button bt_save;
-
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "myprefs";
+    private static final String regex = "^(.+)@(.+)[.](.+)$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             moveToNext();
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         tv_firstname = findViewById(R.id.tx_firstname);
         tv_lastname = findViewById(R.id.tx_lastname);
@@ -43,39 +44,13 @@ public class MainActivity extends AppCompatActivity {
         tx_phone = findViewById(R.id.tx_phone);
         bt_save = findViewById(R.id.bt_save);
 
-        onClickSave();
-
-
-    }
-
-    private Boolean checkData() {
-        String firstname = sharedpreferences.getString("firstname","");
-        String lastname = sharedpreferences.getString("lastname","");
-        //Date age = prefs.getInt("age",0);
-        String email = sharedpreferences.getString("email","");
-        String phoneNumber = sharedpreferences.getString("phoneNumber","");
-
-        Log.println(Log.INFO, "System", firstname);
-        Log.println(Log.INFO, "System", lastname);
-        Log.println(Log.INFO, "System", email);
-        Log.println(Log.INFO, "System", phoneNumber);
-
-        return (!firstname.isEmpty() && !lastname.isEmpty() && !email.isEmpty() && !phoneNumber.isEmpty());
-    }
-
-    private void moveToNext() {
-        startActivity(new Intent(MainActivity.this, SecondActivity.class));
-    }
-
-    private void onClickSave() {
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!validateFirstname() && !validateLastname() && !validateEmail() && !validatePhoneNumber()) {
+
+                if(!validateFirstname() | !validateLastname() | !checkDateFormat() | !validateEmail()) {
                     return;
                 }
-
-                Log.println(Log.INFO, "System", tx_date.getText().toString());
 
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("firstname", tv_firstname.getText().toString());
@@ -84,13 +59,32 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("email", tx_email.getText().toString());
                 editor.putString("phoneNumber", tx_phone.getText().toString());
                 editor.apply();
-                Toast.makeText(MainActivity.this, "Sucess!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Sucess!", Toast.LENGTH_LONG).show();
                 moveToNext();
-
 
             }
         });
     }
+
+    private Boolean checkData() {
+        String firstname = sharedpreferences.getString("firstname","");
+        String lastname = sharedpreferences.getString("lastname","");
+        String age = sharedpreferences.getString("age","");
+        String email = sharedpreferences.getString("email","");
+
+        return (!isBlank(firstname) & !isBlank(lastname) & !isBlank(age) & !isBlank(email));
+    }
+
+    private Boolean isBlank(String text) {
+        return (text.trim().length() == 0);
+
+
+    }
+
+    private void moveToNext() {
+        startActivity(new Intent(LoginActivity.this, SecondActivity.class));
+    }
+
 
 //        btn_add = findViewById(R.id.bt_add);
 //        btn_viewAll = findViewById(R.id.bt_viewAll);
@@ -136,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean validateFirstname() {
         String firstname = tv_firstname.getText().toString().trim();
 
-        if(firstname.isEmpty()) {
+        if(isBlank(firstname)) {
             tv_firstname.setError("Field can not be empty!");
             return false;
         }
@@ -148,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         private boolean validateLastname() {
             String lastname = tv_lastname.getText().toString().trim();
 
-            if(lastname.isEmpty()) {
+            if(isBlank(lastname)) {
                 tv_lastname.setError("Field can not be empty!");
                 return false;
             }
@@ -157,29 +151,35 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-//        private Boolean checkDateFormat(){
+        private Boolean checkDateFormat(){
+            String dateStr = tx_date.getText().toString().trim();
 
-//        }
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            sdf.setLenient(false);
+            try {
+                sdf.parse(dateStr);
+            } catch (ParseException e) {
+                tx_date.setError("Field wrong format!");
+                return false;
+            }
+            return true;
+        }
 
         private boolean validateEmail() {
             String email = tx_email.getText().toString().trim();
-            if(email.isEmpty()) {
+
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(email);
+
+            if(isBlank(email)) {
                 tx_email.setError("Field can not be empty!");
+                return false;
+            } else if(!matcher.matches()) {
+                tx_email.setError("Email in wrong format!!");
                 return false;
             }
 
             tx_email.setError(null);
-            return true;
-        }
-
-        private boolean validatePhoneNumber() {
-            String phoneNumber = tx_phone.getText().toString().trim();
-            if(phoneNumber.isEmpty()) {
-                tx_phone.setError("Field can not be empty!");
-                return false;
-            }
-
-            tx_phone.setError(null);
             return true;
         }
 

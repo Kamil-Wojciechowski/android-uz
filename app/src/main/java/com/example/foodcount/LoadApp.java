@@ -16,12 +16,12 @@ public class LoadApp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
         if(checkData()) {
             startActivity(new Intent(LoadApp.this, SecondActivity.class));
         } else {
-            startActivity(new Intent(LoadApp.this, MainActivity.class));
+            startActivity(new Intent(LoadApp.this, LoginActivity.class));
         }
 
     }
