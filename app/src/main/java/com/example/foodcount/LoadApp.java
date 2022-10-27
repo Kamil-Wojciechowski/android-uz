@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class LoadApp extends AppCompatActivity {
 
@@ -19,7 +21,7 @@ public class LoadApp extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
         if(checkData()) {
-            startActivity(new Intent(LoadApp.this, SecondActivity.class));
+            startActivity(new Intent(LoadApp.this, MainActivity.class));
         } else {
             startActivity(new Intent(LoadApp.this, LoginActivity.class));
         }
@@ -29,7 +31,7 @@ public class LoadApp extends AppCompatActivity {
     private Boolean checkData() {
         String firstname = sharedpreferences.getString("firstname","");
         String lastname = sharedpreferences.getString("lastname","");
-        //Date age = prefs.getInt("age",0);
+        String age = sharedpreferences.getString("age","");
         String email = sharedpreferences.getString("email","");
         String phoneNumber = sharedpreferences.getString("phoneNumber","");
 
@@ -38,7 +40,11 @@ public class LoadApp extends AppCompatActivity {
         Log.println(Log.INFO, "System", email);
         Log.println(Log.INFO, "System", phoneNumber);
 
-        return (!firstname.isEmpty() && !lastname.isEmpty() && !email.isEmpty() && !phoneNumber.isEmpty());
+        return (!isBlank(firstname) && !isBlank(lastname) && !isBlank(age) && !isBlank(email) && !isBlank(phoneNumber));
+    }
+
+    private Boolean isBlank(String text) {
+        return (text.trim().length() == 0);
     }
 
 }

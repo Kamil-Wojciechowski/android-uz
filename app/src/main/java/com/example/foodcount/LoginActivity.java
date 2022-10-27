@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     Button bt_save;
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "myprefs";
-    private static final String regex = "^(.+)@(.+)[.](.+)$";
+    public static final String regex = "^(.+)@(.+)[.](.+)$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("email", tx_email.getText().toString());
                 editor.putString("phoneNumber", tx_phone.getText().toString());
                 editor.apply();
-                Toast.makeText(LoginActivity.this, "Sucess!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_LONG).show();
                 moveToNext();
 
             }
@@ -77,12 +77,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private Boolean isBlank(String text) {
         return (text.trim().length() == 0);
-
-
     }
 
     private void moveToNext() {
-        startActivity(new Intent(LoginActivity.this, SecondActivity.class));
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 
 
@@ -162,6 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                 tx_date.setError("Field wrong format!");
                 return false;
             }
+
+            tx_date.setError(null);
             return true;
         }
 
