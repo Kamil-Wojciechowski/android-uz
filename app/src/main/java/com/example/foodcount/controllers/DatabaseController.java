@@ -1,53 +1,42 @@
-package com.example.foodcount;
+package com.example.foodcount.controllers;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.foodcount.models.CustomerModel;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseController extends SQLiteOpenHelper {
 
-    public static final String CUSTOMER_TABLE = "CUSTOMER_TABLE";
-    public static final String ID = "ID";
-    public static final String CUSTOMER_NAME = "CUSTOMER_NAME";
-    public static final String CUSTOMER_AGE = "CUSTOMER_AGE";
-    public static final String ACTIVE_CUSTOMER = "ACTIVE_CUSTOMER";
+    public static final String PRODUCTS_TABLE = "products_table";
+    public static final String ID = "Id";
+    public static final String NAME = "Name";
+    public static final String CALORIES = "Calories";
+    public static final String PROTEINS = "Proteins";
+    public static final String CARBS = "Carbs";
+    public static final String FAT = "Fat";
+    public static final String IMAGE = "Image";
 
-    public DatabaseHelper(@Nullable Context context) {
+    public DatabaseController(@Nullable Context context) {
         super(context, "foodcount.db", null, 1);
+        Log.println(Log.INFO, "System - DB", "Creating Database");
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + CUSTOMER_TABLE + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CUSTOMER_NAME + " TEXT, " + CUSTOMER_AGE + " INT, " + ACTIVE_CUSTOMER + " BOOL)";
+        Log.println(Log.INFO, "System - DB", "Creating Tables");
+        String createTableStatement = "CREATE TABLE " + PRODUCTS_TABLE + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT, " + CALORIES + " REAL, " + PROTEINS + " REAL, " + CARBS + " REAL, " + FAT + " REAL, " + IMAGE + " BLOB )";
         db.execSQL(createTableStatement);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
-    }
-
-    public boolean addOne(CustomerModel customerModel) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(CUSTOMER_NAME, customerModel.getName());
-        cv.put(CUSTOMER_AGE, customerModel.getAge());
-        cv.put(ACTIVE_CUSTOMER, customerModel.isActive());
-
-        long status = db.insert(CUSTOMER_TABLE, null, cv);
-        if(status == 0) {
-            return false;
-        }
-
-        return true;
     }
 
 //    public List<CustomerModel> getEveryone() {
