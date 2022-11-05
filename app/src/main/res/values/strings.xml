@@ -13,4 +13,12 @@
     <string name="Email">Email</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="Save">Save</string>
+    <string name="Back">Back</string>
+    <string name="Search">Search</string>
+    <string name="ProductName">Product Name</string>
+    <string name="Calories">Calories</string>
+    <string name="Proteins">Proteins</string>
+    <string name="Carbs">Carbs</string>
+    <string name="Fat">Fat</string>
+    <string name="addImage">Add Image</string>
 </resources>
