@@ -38,33 +38,4 @@ public class DatabaseController extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
     }
-
-//    public List<CustomerModel> getEveryone() {
-//        List<CustomerModel> returnList = new ArrayList<>();
-//
-//        String query = "Select * from " + CUSTOMER_TABLE;
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.rawQuery(query, null);
-//
-//        if(cursor.moveToFirst()) {
-//            do {
-//                int customerId = cursor.getInt(0);
-//                String customerName = cursor.getColumnName(1);
-//                int customerAge = cursor.getInt(2);
-//                boolean isActive = cursor.getInt(3) == 1;
-//
-//                CustomerModel newCustomer = new CustomerModel(customerId, customerName, customerAge, isActive);
-//                returnList.add(newCustomer);
-//            } while (cursor.moveToNext());
-//        }
-//
-//        cursor.close();
-//        db.close();
-//
-//
-//
-//        return returnList;
-//    }
 }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -20,6 +21,18 @@ public class Product extends DatabaseController {
     private Double carbs;
     private Double fat;
     private byte[] image;
+    private Context context;
+    SQLiteDatabase db = super.getWritableDatabase();
+    SQLiteDatabase dbRead = super.getReadableDatabase();
+
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     public Integer getId() {
         return Id;
@@ -79,18 +92,23 @@ public class Product extends DatabaseController {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", calories=" + calories +
-                ", proteins=" + proteins +
-                ", carbs=" + carbs +
-                ", fat=" + fat +
-                ", image=" + Arrays.toString(image) +
-                '}';
+        return name;
+    }
+
+    public Product(@Nullable Context context) {
+        super(context);
+        this.context = context;
+    }
+
+    public Product(@Nullable Context context, Integer id) {
+        super(context);
+        this.context = context;
+        this.Id = id;
     }
 
     public Product(@Nullable Context context, String name, Double calories, Double proteins, Double carbs, Double fat, byte[] image) {
         super(context);
+        this.context = context;
         this.name = name;
         this.calories = calories;
         this.proteins = proteins;
@@ -101,7 +119,8 @@ public class Product extends DatabaseController {
 
     public Product(@Nullable Context context, Integer id, String name, Double calories, Double proteins, Double carbs, Double fat, byte[] image) {
         super(context);
-        Id = id;
+        this.context = context;
+        this.Id = id;
         this.name = name;
         this.calories = calories;
         this.proteins = proteins;
@@ -111,32 +130,33 @@ public class Product extends DatabaseController {
     }
 
     public ArrayList<Product> read() {
-        SQLiteDatabase db = super.getWritableDatabase();
-
         Cursor cursorProducts = db.rawQuery("Select * from " + PRODUCTS_TABLE, null);
 
         ArrayList<Product> productArrayList = new ArrayList<>();
 
+        Log.println(Log.WARN, "SYSTEM PRODUCT", "1");
+
         if (cursorProducts.moveToFirst()) {
             do {
-                productArrayList.add(new Product(null,
-                        Integer.parseInt(cursorProducts.getString(1)),
-                        cursorProducts.getString(2),
-                        Double.parseDouble(cursorProducts.getString(3)),
-                        Double.parseDouble(cursorProducts.getString(4)),
-                        Double.parseDouble(cursorProducts.getString(5)),
-                        Double.parseDouble(cursorProducts.getString(6)),
-                        cursorProducts.getBlob(7))
+                productArrayList.add(new Product(context,
+                        cursorProducts.getInt(0),
+                        cursorProducts.getString(1),
+                        cursorProducts.getDouble(2),
+                        cursorProducts.getDouble(3),
+                        cursorProducts.getDouble(4),
+                        cursorProducts.getDouble(5),
+                        cursorProducts.getBlob(6))
                 );
             } while (cursorProducts.moveToNext());
         }
+
+        Log.println(Log.WARN, "SYSTEM PRODUCT", "1");
 
         cursorProducts.close();
         return productArrayList;
     }
 
     public boolean save() {
-        SQLiteDatabase db = super.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(super.NAME, this.name);
@@ -155,7 +175,6 @@ public class Product extends DatabaseController {
     }
 
     public boolean edit() {
-        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(super.NAME, this.name);
@@ -171,10 +190,35 @@ public class Product extends DatabaseController {
         }
 
         return true;
-
     }
 
+    public boolean delete() {
+        long status = db.delete(PRODUCTS_TABLE, "Id=?", new String[]{Id.toString()});
 
+        if(status == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Product get() {
+        Product product = new Product(context, -1);
+        Cursor cursorProducts = dbRead.rawQuery("Select * from " + PRODUCTS_TABLE + " where Id="+ Id.toString(), null);
+
+        if(cursorProducts.moveToFirst()) {
+            product.setId(cursorProducts.getInt(0));
+            product.setName(cursorProducts.getString(1));
+            product.setCalories( cursorProducts.getDouble(2));
+            product.setProteins(cursorProducts.getDouble(3));
+            product.setCarbs(cursorProducts.getDouble(4));
+            product.setFat( cursorProducts.getDouble(5));
+            product.setImage(cursorProducts.getBlob(6));
+        }
+        cursorProducts.close();
+
+        return product;
+    }
 
 
 }

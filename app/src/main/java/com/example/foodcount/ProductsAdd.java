@@ -107,13 +107,6 @@ public class ProductsAdd extends AppCompatActivity {
         String carbs = tx_carbs.getText().toString();
         String fat = tx_fat.getText().toString();
 
-        Log.println(Log.INFO, "System", name);
-        Log.println(Log.INFO, "System", calories.toString());
-        Log.println(Log.INFO, "System", proteins.toString());
-        Log.println(Log.INFO, "System", carbs.toString());
-        Log.println(Log.INFO, "System", fat.toString());
-
-
         if(name.isEmpty()) {
             tx_name.setError("Field can not be empty!");
             nameChk = true;
