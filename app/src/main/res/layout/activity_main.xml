@@ -23,4 +23,14 @@
         app:icon="@drawable/ic_user_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt_products"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:icon="@drawable/ic_products"
+        app:layout_constraintEnd_toStartOf="@+id/bt_user_settings"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
