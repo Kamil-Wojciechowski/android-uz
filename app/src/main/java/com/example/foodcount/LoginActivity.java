@@ -1,10 +1,18 @@
 package com.example.foodcount;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import android.Manifest;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -48,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{
+                    Manifest.permission.POST_NOTIFICATIONS}, 1);
+
                 if(!validateFirstname() | !validateLastname() | !checkDateFormat() | !validateEmail()) {
                     return;
                 }
@@ -60,10 +72,48 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("phoneNumber", tx_phone.getText().toString());
                 editor.apply();
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_LONG).show();
+
+                notification();
+
+                finish();
+
                 moveToNext();
 
             }
         });
+    }
+
+    private void notification() {
+        NotificationManager mNotificationManager;
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(LoginActivity.this, "notify_001");
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.setBigContentTitle("You logged correctly.");
+        bigText.setSummaryText("Hello there! You finally awake.");
+
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+        mBuilder.setContentTitle("You logged in.");
+        mBuilder.setContentText("Hello there! You finally awake.");
+        mBuilder.setPriority(Notification.PRIORITY_MAX);
+        mBuilder.setStyle(bigText);
+
+        mNotificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+// === Removed some obsoletes
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channelId = "Your_channel_id";
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(channel);
+            mBuilder.setChannelId(channelId);
+        }
+
+        mNotificationManager.notify(0, mBuilder.build());
     }
 
     private Boolean checkData() {

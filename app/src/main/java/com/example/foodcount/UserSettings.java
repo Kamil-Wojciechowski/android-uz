@@ -1,9 +1,17 @@
 package com.example.foodcount;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,11 +43,17 @@ public class UserSettings extends AppCompatActivity {
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ActivityCompat.requestPermissions(UserSettings.this, new String[]{
+                        Manifest.permission.POST_NOTIFICATIONS}, 1);
+
                 if(validateFields()) {
                     return;
                 }
 
                 save();
+
+                notification();
+
                 finish();
             }
         });
@@ -50,6 +64,39 @@ public class UserSettings extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void notification() {
+        NotificationManager mNotificationManager;
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(UserSettings.this, "notify_001");
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.setBigContentTitle("You changed personal data.");
+        bigText.setSummaryText("It's okay to make a mistake!");
+
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+        mBuilder.setContentTitle("You changed personal data.");
+        mBuilder.setContentText("It's okay to make a mistake!");
+        mBuilder.setPriority(Notification.PRIORITY_MAX);
+        mBuilder.setStyle(bigText);
+
+        mNotificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+// === Removed some obsoletes
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channelId = "Your_channel_id";
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(channel);
+            mBuilder.setChannelId(channelId);
+        }
+
+        mNotificationManager.notify(0, mBuilder.build());
     }
 
     private void setUpValues() {
