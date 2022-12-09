@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CDCDCD"
     tools:context=".MainActivity">
 
     <TextView
@@ -20,6 +21,8 @@
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:icon="@drawable/ic_user_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +33,8 @@
         android:layout_height="57dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:icon="@drawable/ic_products"
         app:layout_constraintEnd_toStartOf="@+id/bt_user_settings"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +45,8 @@
         android:layout_height="74dp"
         android:layout_marginTop="16dp"
         android:text="Canvas Draw"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:layout_constraintEnd_toStartOf="@+id/bt_products"
         app:layout_constraintHorizontal_bias="0.074"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CDCDCD"
     tools:context=".ProductsEdit">
 
     <ImageView
@@ -23,6 +24,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/addImage"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:layout_constraintEnd_toStartOf="@+id/im_productEditImage"
         app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +38,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Back"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +50,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Save"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,6 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Delete"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
         app:layout_constraintEnd_toStartOf="@+id/bt_productsEditSave"
         app:layout_constraintStart_toEndOf="@+id/bt_productsEditBack"
         app:layout_constraintTop_toTopOf="parent" />
