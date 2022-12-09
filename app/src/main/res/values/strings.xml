@@ -5,8 +5,8 @@
     <string name="CustomerActive">Customer Active</string>
     <string name="ViewAll">View All</string>
     <string name="Add">Add</string>
-    <string name="welcomeString">Welcome in reciepe journal!</string>
-    <string name="welcomAskQuestion">We wanted to ask you to provide basic information for us!</string>
+    <string name="welcomeString">Welcome in our recipe journal!</string>
+    <string name="welcomAskQuestion">We want you to provide us basic information.</string>
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
     <string name="birthDate">Birth Date: 01.01.2000</string>
@@ -22,4 +22,5 @@
     <string name="Fat">Fat</string>
     <string name="addImage">Add Image</string>
     <string name="drawImage">Draw Image</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
