@@ -83,11 +83,12 @@
         android:id="@+id/bt_save_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/Save"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-60dp"
         android:backgroundTint="#2196F3"
         android:backgroundTintMode="add"
+        android:text="@string/Save"
+        app:layout_constraintBottom_toTopOf="@+id/bt_about"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tx_phone_settings" />
 
@@ -95,14 +96,15 @@
         android:id="@+id/bt_back_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/Back"
+        android:layout_marginTop="-60dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="#2196F3"
         android:backgroundTintMode="add"
+        android:text="@string/Back"
+        app:layout_constraintBottom_toTopOf="@+id/bt_about"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.733"
-        app:layout_constraintStart_toEndOf="@+id/bt_save_settings"
-        app:layout_constraintTop_toBottomOf="@+id/tx_phone_settings" />
+        app:layout_constraintTop_toBottomOf="@+id/tx_phone_settings"
+        app:layout_constraintVertical_bias="0.501" />
 
     <TextView
         android:id="@+id/textView2"
@@ -113,4 +115,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
+        android:text="ABOUT US"
+        app:iconTintMode="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

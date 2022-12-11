@@ -10,6 +10,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 public class UserSettings extends AppCompatActivity {
 
     EditText tx_firstname, tx_lastname, tx_email, tx_date, tx_phone;
-    Button bt_save, bt_back;
+    Button bt_save, bt_back, bt_about;
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "myprefs";
     public static final String regex = "^(.+)@(.+)[.](.+)$";
@@ -57,6 +58,9 @@ public class UserSettings extends AppCompatActivity {
                 finish();
             }
         });
+        bt_about.setOnClickListener(view -> {
+            startActivity(new Intent(UserSettings.this, About.class));
+        });
 
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +76,11 @@ public class UserSettings extends AppCompatActivity {
                 new NotificationCompat.Builder(UserSettings.this, "notify_001");
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.setBigContentTitle("You changed personal data.");
+        bigText.setBigContentTitle("You've changed personal data.");
         bigText.setSummaryText("It's okay to make a mistake!");
 
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
-        mBuilder.setContentTitle("You changed personal data.");
+        mBuilder.setContentTitle("You've changed personal data.");
         mBuilder.setContentText("It's okay to make a mistake!");
         mBuilder.setPriority(Notification.PRIORITY_MAX);
         mBuilder.setStyle(bigText);
@@ -108,6 +112,7 @@ public class UserSettings extends AppCompatActivity {
         tx_phone = findViewById(R.id.tx_phone_settings);
         bt_save = findViewById(R.id.bt_save_settings);
         bt_back = findViewById(R.id.bt_back_settings);
+        bt_about = findViewById(R.id.bt_about);
     }
 
     private void insertOldValues() {
