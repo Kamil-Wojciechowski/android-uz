@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         bt_canvas_draw.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ProductsDrawImage.class)));
 
-        //bt_showMaps.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MapsActivity.class)));
+        bt_showMaps.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MapsActivity.class)));
     }
 
     @Override
