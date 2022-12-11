@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bt_userSettings, bt_products, bt_canvas_draw, bt_showMaps;
+    Button bt_userSettings, bt_products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
         bt_userSettings=findViewById(R.id.bt_user_settings);
         bt_products = findViewById(R.id.bt_products);
-        bt_canvas_draw = findViewById(R.id.bt_canvas_draw);
-        bt_showMaps = findViewById(R.id.bt_showMap);
+
 
         bt_userSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, UserSettings.class)));
 
         bt_products.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Products.class)));
-
-        bt_canvas_draw.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ProductsDrawImage.class)));
-
-        bt_showMaps.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MapsActivity.class)));
     }
 
     @Override

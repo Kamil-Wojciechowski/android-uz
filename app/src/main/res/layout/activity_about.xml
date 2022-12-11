@@ -22,9 +22,10 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="20dp"
         android:text="Danuta Dopierała and Kamil Wojciechowski"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -36,16 +37,38 @@
         android:backgroundTint="#2196F3"
         android:backgroundTintMode="add"
         android:onClick="playVid"
-        android:text="Play"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:layout_editor_absoluteX="158dp" />
+        android:text="View Promotional Video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="460dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="434dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_aboutPlay"
+        app:layout_constraintTop_toBottomOf="@+id/bt_showMap"
         tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/bt_canvas_draw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
+        android:text="View our LOGO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_aboutPlay" />
+
+    <Button
+        android:id="@+id/bt_showMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="add"
+        android:text="Show where you can find us!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_canvas_draw" />
 </androidx.constraintlayout.widget.ConstraintLayout>
