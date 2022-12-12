@@ -95,6 +95,12 @@ public class Product extends DatabaseController {
         return name;
     }
 
+    public Product(@Nullable Context context, String name){
+        super(context);
+        this.context = context;
+        this.name = name;
+    }
+
     public Product(@Nullable Context context) {
         super(context);
         this.context = context;

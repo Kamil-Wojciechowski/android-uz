@@ -16,6 +16,8 @@ import com.example.foodcount.fragments.BlankFragment1;
 import com.example.foodcount.fragments.BlankFragment2;
 import com.example.foodcount.fragments.Communicator;
 
+import org.jetbrains.annotations.TestOnly;
+
 public class MainActivity extends AppCompatActivity implements Communicator {
 
     Button bt_userSettings, bt_products;
@@ -64,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements Communicator {
         bt_userSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, UserSettings.class)));
         bt_products.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Products.class)));
     }
-
-
 
     @Override
     protected void onStart() {
